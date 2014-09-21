@@ -35,3 +35,38 @@ cacheSolve <- function(x, ...) {
         x$setinverse(i)
         i        
 }
+
+## This is how I tested
+
+testAssignment <- function() {
+
+	# establish a random square array of integers
+	# (assume it is invertible, but will know for sure when dd is calculated)
+	
+	dim = sample(25,1)
+	cat ("array dimension is:\n", dim, "\n")
+	cat ("\n")
+		
+	d = matrix(sample(1000,dim*dim), nrow=dim, ncol=dim)
+	cat ("array is:\n")
+	print (d)
+	cat ("\n")
+	
+	# calculate the inverse directly
+	dd = solve(d)
+
+	# now use the functions under test
+	a = makeCacheMatrix(d)
+	aa = cacheSolve(a)
+	
+	# aa should equal dd
+	cat ("dd - aa should equal a ZERO matrix\n")
+	print (dd - aa)
+	cat ("\n")
+	
+	# d %*% a should be identity matrix
+	cat ("d * aa should equal an IDENTITY matrix\n")
+	print (round(d %*% aa))
+	cat ("\n")
+	
+}
